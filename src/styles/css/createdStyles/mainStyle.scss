@@ -1,0 +1,191 @@
+@import "variables.scss";
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes autofill {
+    to {
+        color: #666;
+        background: transparent;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    width: 0px;
+    background: transparent;
+}
+
+input:-webkit-autofill {
+    animation-name: autofill;
+    -webkit-animation-name: autofill;
+    animation-fill-mode: both;
+    -webkit-animation-fill-mode: both;
+}
+
+.full-window{
+    width:  100vw;
+    height: 100vh;
+}
+
+.ant-layout-sider-children .logo {
+    height: 30px;
+    color: white;
+    font-size: 20px;
+    display: flex;
+    justify-content : flex-start;
+    white-space: nowrap;
+    align-items : center;
+    margin: 15px;
+}
+
+.ant-layout-header{
+    padding-left: 20px;
+    padding-right: 20px;
+    position: fixed;
+    background-color: #001428;
+    border-left: 1px solid white;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 240px;
+    z-index: 2;
+}
+
+
+.main-style{
+    transform: translateZ(0px);
+    overflow: hidden;
+}
+
+.content-container{
+    overflow: scroll;
+    padding-top: 80px;
+    padding-left: 20px;
+    padding-right: 20px;
+    min-width: 240px;
+}
+
+.menu-text{
+    font-size: 15px;
+}
+
+.menu-sub-text{
+    font-size: 14px;
+}
+
+.user-text{
+    font-size: 15px;
+}
+
+.user-action{
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.code-score-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.title-progress{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.title-progress-container{
+    width: 100%;
+    padding-right: 15px;
+}
+
+.title-progress span{
+    color: $blackColor;
+    padding-right: 15px;
+    font-weight: 400;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.title-progress .fix-title{
+    color: $blackColor;
+    padding-right: 15px;
+    font-weight: 400;
+    font-size: 14px;
+    width: 160px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.total-circle-container{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.total-circle-container span{
+    color: $blackColor;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+
+
+.profile-container{
+    min-width: 200;
+    padding: 5px;
+    box-shadow: 0px 10px 8px #888888;
+    background-color: white;
+}
+
+
+.profile-container .information{
+    color : $blackColor;
+    padding: 0px 5px 0px 5px;
+    font-size: 15;
+    font-weight: 200;
+    margin-bottom: 20px;
+}
+
+.profile-container .information span{
+    font-weight: 500;
+}
+
+.form-section-title{
+    font-size: 16px;
+    color: #1890ff;
+    margin-bottom: 10px;
+}
+
+
+.pdf-image-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 104px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.ant-advanced-search-form .ant-form-item {
+    display: flex;
+  }
+
+  .ant-advanced-search-form .ant-form-item-control-wrapper {
+    flex: 1;
+  }
