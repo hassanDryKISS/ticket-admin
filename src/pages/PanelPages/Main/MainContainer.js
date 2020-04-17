@@ -108,6 +108,7 @@ class MainContainer extends React.Component {
 
 
   render() {
+    console.log('________', this.props.children)
     return (
       <Layout className="full-window">
         <SideMenu
@@ -115,8 +116,10 @@ class MainContainer extends React.Component {
           subPageIndex={this.state.subPageIndex.toString()}
           history={this.props.history}
           menu={this.state.menu}
-          collapsed={this.state.collapsed}
-        />
+          collapsed={this.state.collapsed}>
+
+            'sdsdsd'
+          </SideMenu>
         <Layout className="main-style">
           <HeaderContainer
             history={this.props.history}

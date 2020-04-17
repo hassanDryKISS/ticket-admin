@@ -15,10 +15,14 @@ import { checkUserAuthorized } from './utilities/Functions/SetupFunctions'
 
 //Company admin pages
 import ClientList from './pages/PanelPages/Client/ClientList'
+import Dashboard from './pages/PanelPages/Dashboard/Dashboard'
 
 
 //Main Container
 import MainContainer from './pages/PanelPages/Main/MainContainer'
+
+//Main Side Bar
+import SideMenu from './pages/PanelPages/Main/SideMenu'
 
 
 //Front Pages
@@ -55,6 +59,7 @@ class App extends React.Component {
                         }} />
                     <Route>
                         <Switch>
+
                             <MainContainer
                                 page={this.state.page}
                                 subPage={this.state.subPage}
@@ -65,7 +70,13 @@ class App extends React.Component {
                                         this.onRouteChanged('Clients', '/');
                                         return <ClientList {...props} />;
                                     }} />
+                                <Route exact={true} path="/dashboard"
+                                    render={(props) => {
+                                        this.onRouteChanged('Dashboard', '/');
+                                        return <Dashboard {...props} />
+                                    }} />
                             </MainContainer>
+
                         </Switch>
                     </Route>
                 </Switch>

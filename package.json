@@ -13,6 +13,7 @@
     "history": "^4.9.0",
     "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
+    "query-string": "^6.12.1",
     "react": "^16.13.0",
     "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.13.0",

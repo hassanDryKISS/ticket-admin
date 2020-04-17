@@ -38,6 +38,7 @@ class SideMenu extends React.Component {
 
   render() {
     const { menu, collapsed } = this.props
+    console.log('children',this.props.children )
     return (
       <Sider width={180} trigger={null} collapsible collapsed={collapsed}>
         <div className="logo" style={{
@@ -46,6 +47,7 @@ class SideMenu extends React.Component {
         }}>
           {collapsed ? 'T-AD' : 'Ticket Admin'}
         </div>
+       <div style={{color: 'red'}}> {this.props.children}</div>
         {/* <Menu theme="dark" selectedKeys={[this.props.pageIndex]} mode="inline">
           {menu.map((item, index) => (
             this.menuType(item, index)
