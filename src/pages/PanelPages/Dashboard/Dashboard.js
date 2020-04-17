@@ -1,6 +1,10 @@
 
 import { AnimatedWayPointDiv } from '../../../utilities/components/AnimatedWayPoint'
-import { Drawer, Table, Button, Tooltip, Icon, Popconfirm } from 'antd';
+import { Drawer, Table, Button, Tooltip, Icon, Popconfirm, Tabs, Row, Col, Typography } from 'antd';
+import AreaChart from './AreaChart'
+import DashboardDescription from './DashboardDescription'
+import DashboardList from './DashboardList'
+
 import notif from '../../../utilities/Functions/Notification'
 import ClientApis from '../../../api/componentApi/ClientApis'
 import * as Param from '../../../redux/Param'
@@ -8,6 +12,8 @@ import { connect } from 'react-redux'
 import { queryString } from 'query-string'
 import * as React from 'react';
 
+const { TabPane } = Tabs;
+const { Text } = Typography;
 
 
 
@@ -37,8 +43,8 @@ class ClientList extends React.Component {
   componentDidMount() {
     // let params = queryString.parse(this.props.history.location.search)
     // console.log(params)
-    console.log( this.props.match)
-    console.log( this.props.match.params)
+    console.log(this.props.match)
+    console.log(this.props.match.params)
     // this.getClients(1, 5)
   }
 
@@ -133,7 +139,7 @@ class ClientList extends React.Component {
 
   onClose = () => {
     this.setState({
-      visible: false,type : ''
+      visible: false, type: ''
     });
   };
 
@@ -141,32 +147,56 @@ class ClientList extends React.Component {
   render() {
     return (
       <AnimatedWayPointDiv>
-        <Button onClick={() => {
-          this.setState({ type: 'add' })
-          this.showDrawer()
-        }} style={{ marginBottom: 20 }} type="primary" icon="plus">Add Client</Button>
-        <Table
-          columns={this.getColumns()}
-          pagination={{
-            showSizeChanger: true,
-            pageSizeOptions: ['5', '25', '50', '100'],
-            defaultCurrent: 1,
-            defaultPageSize: 10,
-            pageSize: this.state.pageSize,
-            total: this.state.total,
-          }}
-          loading={this.props.loading_api}
-          dataSource={this.state.data}
-          onChange={this.onChange} />
-        <Drawer
-          width={320}
-          title={this.state.type === 'add' ? "Create a new Client" : "Edit existing Client"}
-          onClose={this.onClose}
-          visible={(this.state.visible)}
-          bodyStyle={{ paddingBottom: 80 }}
-        >
-         testsstst
-        </Drawer>
+
+        <Row >
+          <Col xs={24}>
+          <Tabs tabPosition={'left'}>
+            <TabPane tab={<div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
+              <Text>Tickets Sold</Text>
+              <Text strong>0</Text>
+              <Text>SAME AS PAST 30 Days</Text>
+            </div>} key="1">
+              <div>
+                <AreaChart />
+              </div>
+            </TabPane>
+            <TabPane tab={
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
+                <Text>Ticket Revenue</Text>
+                <Text strong>AUD $0.00</Text>
+                <Text>SAME AS PAST 30 Days</Text>
+              </div>
+            } key="2">
+              <div>
+                <AreaChart />
+              </div>
+
+            </TabPane>
+            <TabPane tab={
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
+                <Text>Conversion Rates</Text>
+                <Text strong>0.0%</Text>
+                <Text>SAME AS PAST 30 Days</Text>
+              </div>
+            } key="3">
+              <div>
+                <AreaChart />
+              </div>
+
+            </TabPane>
+          </Tabs>
+          </Col>
+          </Row>
+    
+
+        <Row gutter={[8,8]} style={{marginTop: '20px'}}>
+          <Col xs={24} md={18}>
+            <DashboardList />
+          </Col>
+          <Col xs={24} md={6}>
+            <DashboardDescription />
+          </Col>
+        </Row>
       </AnimatedWayPointDiv>
     );
   }
