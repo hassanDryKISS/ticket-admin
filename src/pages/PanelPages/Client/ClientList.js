@@ -36,7 +36,7 @@ class ClientList extends React.Component {
 
 
   componentDidMount() {
-    this.getClients(1, 5)
+    // this.getClients(1, 5)
   }
 
 

@@ -4,9 +4,16 @@ import * as Param from '../../../redux/Param'
 import { connect } from 'react-redux'
 import SideMenu from './SideMenu'
 import * as React from 'react';
-import { Layout } from 'antd';
+import { Layout, Menu, Icon } from 'antd';
+import {
+  MailOutlined,
+  DashboardFilled,
+  CalendarFilled,
+  SettingFilled,
+} from '@ant-design/icons';
 
 const { Content } = Layout;
+
 
 class MainContainer extends React.Component {
   constructor(props) {
@@ -17,11 +24,32 @@ class MainContainer extends React.Component {
       page: '',
       menu: [
         {
-          text: 'Clients',
-          page: '/clients',
-          icon: 'team',
+          text: 'Dashboard',
+          page: '/dashboard',
+          icon: <DashboardFilled />,
           subMenu: []
         },
+
+        {
+          text: 'Event',
+          page: '/events',
+          icon: <CalendarFilled />,
+          subMenu: [
+            {
+              text: 'Clients',
+              page: '/clients',
+              icon: <MailOutlined />,
+              subMenu: []
+            },
+          ]
+        },
+        {
+          text: 'Manager',
+          page: '/manage',
+          icon: <SettingFilled />,
+          subMenu: []
+        },
+
       ],
       pageIndex: 0,
       subPageIndex: 0
@@ -77,6 +105,8 @@ class MainContainer extends React.Component {
   }
 
 
+
+
   render() {
     return (
       <Layout className="full-window">
@@ -93,6 +123,9 @@ class MainContainer extends React.Component {
             user={this.props.user_information}
             collapsed={this.state.collapsed}
             toggle={() => this.toggle()}
+            menu={this.state.menu}
+            pageIndex={this.state.pageIndex.toString()}
+
           />
           <Content className="content-container">
             {this.props.children}

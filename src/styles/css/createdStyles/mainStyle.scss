@@ -45,7 +45,9 @@ input:-webkit-autofill {
 }
 
 .ant-layout-header{
-    padding-left: 20px;
+    // padding-left: 20px;
+    padding-left: 0!important;
+    height: auto!important;
     padding-right: 20px;
     position: fixed;
     background-color: #001428;

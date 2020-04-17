@@ -4,6 +4,7 @@ import { Layout, Menu, Icon } from 'antd';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
+
 class SideMenu extends React.Component {
   constructor(props) {
     super(props);
@@ -38,18 +39,18 @@ class SideMenu extends React.Component {
   render() {
     const { menu, collapsed } = this.props
     return (
-      <Sider width={250} trigger={null} collapsible collapsed={collapsed}>
+      <Sider width={180} trigger={null} collapsible collapsed={collapsed}>
         <div className="logo" style={{
           justifyContent: !collapsed ?
             'flex-start' : 'center'
         }}>
-          {collapsed ? 'S-TB' : 'Ticket Admin'}
+          {collapsed ? 'T-AD' : 'Ticket Admin'}
         </div>
-        <Menu theme="dark" selectedKeys={[this.props.pageIndex]} mode="inline">
+        {/* <Menu theme="dark" selectedKeys={[this.props.pageIndex]} mode="inline">
           {menu.map((item, index) => (
             this.menuType(item, index)
           ))}
-        </Menu>
+        </Menu> */}
       </Sider>
     );
   }
