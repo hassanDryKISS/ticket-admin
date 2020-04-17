@@ -31,16 +31,11 @@ class MainContainer extends React.Component {
         },
 
         {
-          text: 'Event',
-          page: '/events',
+          text: 'Events',
+          page: '/events-dashboard',
           icon: <CalendarFilled />,
           subMenu: [
-            {
-              text: 'Clients',
-              page: '/clients',
-              icon: <MailOutlined />,
-              subMenu: []
-            },
+           
           ]
         },
         {
@@ -118,7 +113,7 @@ class MainContainer extends React.Component {
           menu={this.state.menu}
           collapsed={this.state.collapsed}>
 
-            'sdsdsd'
+            ''
           </SideMenu>
         <Layout className="main-style">
           <HeaderContainer

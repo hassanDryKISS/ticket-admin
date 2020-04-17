@@ -1,6 +1,6 @@
 
 import { AnimatedWayPointDiv } from '../../../utilities/components/AnimatedWayPoint'
-import { Drawer, Table, Button, Tooltip, Icon, Popconfirm, Tabs, Row, Col, Typography } from 'antd';
+import { Modal, PageHeader, Button, Tooltip, Icon, Popconfirm, Tabs, Row, Col, Typography } from 'antd';
 import AreaChart from './AreaChart'
 import DashboardDescription from './DashboardDescription'
 import DashboardList from './DashboardList'
@@ -11,6 +11,7 @@ import * as Param from '../../../redux/Param'
 import { connect } from 'react-redux'
 import { queryString } from 'query-string'
 import * as React from 'react';
+import { ReloadOutlined } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
 const { Text } = Typography;
@@ -24,7 +25,7 @@ class ClientList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false,
+      visibleNumbersModal: false,
       type: 'add',
       data: [],
       id: -1,
@@ -128,20 +129,13 @@ class ClientList extends React.Component {
     })
   }
 
-  cancelDelete(e) {
+  onClose=()=>{
+    this.setState({
+      visibleNumbersModal : false
+    })
   }
 
-  showDrawer = () => {
-    this.setState({
-      visible: true,
-    });
-  };
 
-  onClose = () => {
-    this.setState({
-      visible: false, type: ''
-    });
-  };
 
 
   render() {
@@ -150,6 +144,39 @@ class ClientList extends React.Component {
 
         <Row >
           <Col xs={24}>
+            <div>
+              <Modal
+                title=""
+                visible={this.state.visibleNumbersModal}
+                footer={null}
+                // onOk={this.handleOk}
+                onCancel={this.onClose}
+              >
+
+                <p>This is a snapshot of your recent ticket sales. The real-time data in this visual is current and accurate when you open the Dashboard; however, the data does not automatically reload and update as sales continue to happen.
+
+Refresh the page to reload the visual and view up-to-the-minute information.
+
+Note: Ticket Revenue is the amount of revenue generated after discounts from ticket sales. This total is only based on the face value of tickets sold and does not include fees</p>
+              
+              </Modal>
+            
+
+            <PageHeader
+              className="site-page-header"
+              // onBack={() => null}
+              title={`Activity for 30 Days`}
+              subTitle=""
+              tags={[<Button type="link" key="3" size="small"><ReloadOutlined />Refresh</Button>, <span onClick={()=> this.setState({visibleNumbersModal: true})}>What are these numbers?</span>]}
+              extra={[
+                <Button key="3" size="small" type="primary">30 DAYS</Button>,
+                <Button key="2" size="small" >7 DAYS</Button>,
+                <Button key="1" size="small" >
+                  24 HOURS
+                </Button>,
+              ]}
+            />
+            </div>
           <Tabs tabPosition={'left'}>
             <TabPane tab={<div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center' }}>
               <Text>Tickets Sold</Text>
@@ -186,18 +213,28 @@ class ClientList extends React.Component {
             </TabPane>
           </Tabs>
           </Col>
-          </Row>
-    
-
-        <Row gutter={[8,8]} style={{marginTop: '20px'}}>
-          <Col xs={24} md={18}>
-            <DashboardList />
-          </Col>
-          <Col xs={24} md={6}>
-            <DashboardDescription />
-          </Col>
         </Row>
-      </AnimatedWayPointDiv>
+
+
+      <Row gutter={[8, 8]} style={{ marginTop: '20px' }}>
+        <Col xs={24} md={18}>
+          <PageHeader
+            className="site-page-header"
+            // onBack={() => null}
+            title={`Upcoming Events`}
+            subTitle=""
+            extra={[
+              <Button key="3" size="small">View All Upcoming Events</Button>,
+
+            ]}
+          />
+          <DashboardList />
+        </Col>
+        <Col xs={24} md={6}>
+          <DashboardDescription />
+        </Col>
+      </Row>
+      </AnimatedWayPointDiv >
     );
   }
 }

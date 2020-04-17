@@ -16,13 +16,11 @@ import { checkUserAuthorized } from './utilities/Functions/SetupFunctions'
 //Company admin pages
 import ClientList from './pages/PanelPages/Client/ClientList'
 import Dashboard from './pages/PanelPages/Dashboard/Dashboard'
+import Events from './pages/PanelPages/Events/Events'
 
 
 //Main Container
 import MainContainer from './pages/PanelPages/Main/MainContainer'
-
-//Main Side Bar
-import SideMenu from './pages/PanelPages/Main/SideMenu'
 
 
 //Front Pages
@@ -74,6 +72,11 @@ class App extends React.Component {
                                     render={(props) => {
                                         this.onRouteChanged('Dashboard', '/');
                                         return <Dashboard {...props} />
+                                    }} />
+                                    <Route exact={true} path="/events-dashboard"
+                                    render={(props) => {
+                                        this.onRouteChanged('Events', '/');
+                                        return <Events {...props} />
                                     }} />
                             </MainContainer>
 
