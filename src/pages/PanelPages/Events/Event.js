@@ -5,6 +5,7 @@ import { Button, Table, Row, Col, Typography, Steps, Popover, Form,
 import * as React from 'react';
 import {  CalendarOutlined, ContainerOutlined, SettingOutlined } from '@ant-design/icons';
 import EventDetailsForm from './EventDetailsForm'
+import EventInventoryForm from './EventInventoryForm'
 
 import { Link } from 'react-router-dom'
 const { Step } = Steps;
@@ -29,7 +30,7 @@ const steps = [
   },
   {
     title: 'Second',
-    content: 'Second-content',
+    content: <EventInventoryForm />,
   },
   {
     title: 'Last',
@@ -44,7 +45,7 @@ class CreatePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: 0,
+      current: 1,
     }
 
   }
