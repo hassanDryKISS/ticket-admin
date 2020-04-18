@@ -17,6 +17,8 @@ import { checkUserAuthorized } from './utilities/Functions/SetupFunctions'
 import ClientList from './pages/PanelPages/Client/ClientList'
 import Dashboard from './pages/PanelPages/Dashboard/Dashboard'
 import Events from './pages/PanelPages/Events/Events'
+import CreateEvent from './pages/PanelPages/Events/CreateEvent'
+import Event from './pages/PanelPages/Events/Event'
 
 
 //Main Container
@@ -78,7 +80,18 @@ class App extends React.Component {
                                         this.onRouteChanged('Events', '/');
                                         return <Events {...props} />
                                     }} />
+                                    <Route exact={true} path="/events/create"
+                                    render={(props) => {
+                                        this.onRouteChanged('Events', '/');
+                                        return <CreateEvent {...props} />
+                                    }} />
+                            <Route exact={true} path="/event"
+                                    render={(props) => {
+                                        this.onRouteChanged('Events', '/');
+                                        return <Event {...props} />
+                                    }} />
                             </MainContainer>
+
 
                         </Switch>
                     </Route>

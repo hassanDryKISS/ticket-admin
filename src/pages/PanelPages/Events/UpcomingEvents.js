@@ -1,5 +1,6 @@
 
 import { Button, Table, Typography, Tooltip, Badge } from 'antd';
+import {Link} from 'react-router-dom'
 
 import * as React from 'react';
 import { EditFilled, UnorderedListOutlined, FolderViewOutlined, DashboardOutlined, EnvironmentFilled, PlusCircleFilled } from '@ant-design/icons';
@@ -150,7 +151,7 @@ class UpcomingEvents extends React.Component {
           <Title level={2}>Upcoming Events</Title>
         <div style={{ display: 'flex', justifyContent: ' space-between' }}>
           <div style={{ marginBottom: '15px' }}>
-            <Button type="primary">Create Event <PlusCircleFilled /></Button>
+            <Link to="/events/create"><Button type="primary">Create Event <PlusCircleFilled /></Button></Link> 
             <Button style={{ marginLeft: '5px' }} >View All Upcoming Events</Button>
           </div>
           <div style={{ marginBottom: '15px ' }}>
