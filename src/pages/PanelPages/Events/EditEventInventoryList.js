@@ -56,9 +56,36 @@ class EditEventInventoryList extends React.Component {
             />,
           )}
         </Form.Item>
+        <Form.Item label="Min. Tickets per Order ">
+          {getFieldDecorator('description', {
+            rules: [{ required: true, message: 'Please Add Min. Tickets per Order ' }],
+          })(
+            <Input
+              placeholder="Add Description"
+            />,
+          )}
+        </Form.Item>
+        <Form.Item label="Price (Online) ">
+          {getFieldDecorator('description', {
+            rules: [{ required: true, message: 'Please Price (Online) ' }],
+          })(
+            <Input addonBefore="AUD $"
+              placeholder=""
+            />,
+          )}
+        </Form.Item>  
+         <Form.Item label="Price (Box Office)*">
+          {getFieldDecorator('description', {
+            rules: [{ required: true, message: 'Please Price (Online) ' }],
+          })(
+            <Input addonBefore="AUD $"
+              placeholder=""
+            />,
+          )}
+        </Form.Item>
         <Form.Item>
           <Button loading={this.props.loading_api} type="primary" htmlType="submit" className="login-form-button">
-            {'Edit Client'}
+            {'Save Price Level'}
           </Button>
         </Form.Item>
       </Form>

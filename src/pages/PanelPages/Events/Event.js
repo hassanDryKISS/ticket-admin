@@ -1,11 +1,15 @@
 
-import { Button, Table, Row, Col, Typography, Steps, Popover, Form,
-  Input } from 'antd';
+import {
+  Button, Table, Row, Col, Typography, Steps, Popover, Form,
+  Input
+} from 'antd';
 
 import * as React from 'react';
-import {  CalendarOutlined, ContainerOutlined, SettingOutlined } from '@ant-design/icons';
+import { CalendarOutlined, ContainerOutlined, SettingOutlined } from '@ant-design/icons';
 import EventDetailsForm from './EventDetailsForm'
 import EventInventoryForm from './EventInventoryForm'
+import EventCheckoutForm from './EventCheckoutForm'
+import EventListForm from './EventListForm'
 
 import { Link } from 'react-router-dom'
 const { Step } = Steps;
@@ -26,7 +30,7 @@ const customDot = (dot, { status, index }) => (
 const steps = [
   {
     title: 'First',
-    content:  <EventDetailsForm />,
+    content: <EventDetailsForm />,
   },
   {
     title: 'Second',
@@ -34,10 +38,10 @@ const steps = [
   },
   {
     title: 'Last',
-    content: 'Last-content',
+    content: <EventCheckoutForm />,
   }, {
     title: 'Last',
-    content: 'Last-content',
+    content:<EventListForm />,
   },
 ];
 
@@ -45,7 +49,7 @@ class CreatePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: 1,
+      current: 2,
     }
 
   }
@@ -58,7 +62,7 @@ class CreatePage extends React.Component {
     const current = this.state.current - 1;
     this.setState({ current });
   }
-  
+
   render() {
     const { current } = this.state;
 

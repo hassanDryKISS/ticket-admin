@@ -302,7 +302,10 @@ class EventInventoryForm extends React.Component {
         <Card title="Discount Levels" size="small" type="inner" style={{ marginBottom: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <p>{`Some seated venues offer discounted price levels for their events (e.g. Student or Senior Citizen price levels).`}</p>
-            <Button >
+            <Button onClick={() => {
+                    this.setState({ type: 'edit' })
+                    this.showDrawer()
+                  }} >
               {' Add Discount Level '}
             </Button>
           </div>
@@ -312,7 +315,10 @@ class EventInventoryForm extends React.Component {
         <Card title="Products" size="small" type="inner" style={{ marginBottom: '20px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <p>{`Allow customers to purchase merchandise or other non-ticket items in the checkout process.`}</p>
-            <Button >
+            <Button onClick={() => {
+                    this.setState({ type: 'edit', })
+                    this.showDrawer()
+                  }} >
               {' Add Products '}
             </Button>
           </div>
@@ -320,7 +326,7 @@ class EventInventoryForm extends React.Component {
 
         <Form.Item labelCol={{ span: 18 }} wrapperCol={{ span: 4 }}>
           <Button loading={this.props.loading_api} type="primary" htmlType="submit" className="login-form-button">
-            {' Save and Continuedsd '} <ArrowRightOutlined />
+            {' Save and Continued'} <ArrowRightOutlined />
           </Button>
         </Form.Item>
       </Form>
