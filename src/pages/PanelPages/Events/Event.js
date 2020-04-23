@@ -53,7 +53,7 @@ class CreatePage extends React.Component {
 
     return (
       <div>
-        <Row gutter={[8, 8]}>
+        <Row gutter={[16, 16]}>
           <Col xs={24}>
             <Steps current={current} >
               <Step title=" Details" icon={<CalendarOutlined />} />
