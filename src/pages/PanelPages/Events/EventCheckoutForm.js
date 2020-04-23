@@ -1,19 +1,17 @@
 
 import {
-  Button, Table, Row, Col, Typography, Steps, Select, Form, Radio, Card, Tooltip, Drawer, Checkbox,
-  Input,
-  InputNumber,
-  Divider
+  Button, Table, Row, Col, Typography, Select, Form, Radio, Card, Tooltip, Drawer,
+  Input
 } from 'antd';
 import notif from '../../../utilities/Functions/Notification'
 
 
 import * as React from 'react';
-import { CalendarOutlined, ContainerOutlined, SettingOutlined, QuestionCircleOutlined, QuestionCircleFilled, PlusCircleFilled, ArrowRightOutlined, EditFilled, DashboardOutlined, UnorderedListOutlined, DeleteOutlined } from '@ant-design/icons';
+import { ArrowRightOutlined, EditFilled, DeleteOutlined } from '@ant-design/icons';
 
 import update from 'immutability-helper';
 import EditEventCheckout from './EditEventCheckout'
-const { Step } = Steps;
+import { defaults } from 'chart.js';
 const { Option } = Select;
 
 const { Title } = Typography;
@@ -22,15 +20,6 @@ const layout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 18 },
 };
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
-const config = {
-  rules: [{ type: 'object', required: true, message: 'Please select time!' }],
-};
-
-const type = 'DragbleBodyRow';
-
 
 class EventInventoryForm extends React.Component {
   constructor(props) {
@@ -133,6 +122,8 @@ class EventInventoryForm extends React.Component {
       case "other":
         form.setFieldsValue({ note: "Hi there!" });
         return;
+        default: 
+        return ''
     }
   };
 

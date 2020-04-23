@@ -1,7 +1,7 @@
 
 import {
-  Button, Table, Row, Col, Typography, Steps, Popover, Form,
-  Input
+  Button, Row, Col, Steps, Popover,
+
 } from 'antd';
 
 import * as React from 'react';
@@ -11,22 +11,8 @@ import EventInventoryForm from './EventInventoryForm'
 import EventCheckoutForm from './EventCheckoutForm'
 import EventListForm from './EventListForm'
 
-import { Link } from 'react-router-dom'
 const { Step } = Steps;
 
-const { Title } = Typography;
-
-const customDot = (dot, { status, index }) => (
-  <Popover
-    content={
-      <span>
-        step {index} status: {status}
-      </span>
-    }
-  >
-    {dot}
-  </Popover>
-);
 const steps = [
   {
     title: 'First',

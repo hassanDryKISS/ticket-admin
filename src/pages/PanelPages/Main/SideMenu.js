@@ -37,7 +37,7 @@ class SideMenu extends React.Component {
   }
 
   render() {
-    const { menu, collapsed } = this.props
+    const {  collapsed } = this.props
     console.log('children',this.props.children )
     return (
       <Sider width={180} trigger={null} collapsible collapsed={collapsed}>

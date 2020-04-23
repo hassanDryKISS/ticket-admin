@@ -1,20 +1,15 @@
-
 import {
-  Button, Table, Row, Col, Typography, Steps, Select, Form, Radio, Card, Tooltip, Drawer, Checkbox,
+  Button, Typography, Form, Card, Tooltip,
   Input,
-  InputNumber,
   Divider, Upload
 } from 'antd';
-import notif from '../../../utilities/Functions/Notification'
 
 
 import * as React from 'react';
-import { CalendarOutlined, ContainerOutlined, SettingOutlined, QuestionCircleOutlined, QuestionCircleFilled, PlusCircleFilled, ArrowRightOutlined, EditFilled, DashboardOutlined, UnorderedListOutlined, DeleteOutlined, UploadOutlined } from '@ant-design/icons';
+import {  EditFilled, DeleteOutlined, UploadOutlined } from '@ant-design/icons';
 
 import update from 'immutability-helper';
-import EditEventCheckout from './EditEventCheckout'
-const { Step } = Steps;
-const { Option } = Select;
+
 const { TextArea } = Input;
 
 const { Title } = Typography;
@@ -27,8 +22,6 @@ const layout = {
 const config = {
   rules: [{ type: 'object', required: true, message: 'Please select time!' }],
 };
-
-const type = 'DragbleBodyRow';
 
 
 class EventListForm extends React.Component {
@@ -129,20 +122,6 @@ class EventListForm extends React.Component {
   };
 
 
-  onVenusChange = value => {
-    const { form } = this.props;
-    switch (value) {
-      case "male":
-        form.setFieldsValue({ note: "Hi, man!" });
-        return;
-      case "female":
-        form.setFieldsValue({ note: "Hi, lady!" });
-        return;
-      case "other":
-        form.setFieldsValue({ note: "Hi there!" });
-        return;
-    }
-  };
 
   handleSetPriceOk = e => {
     console.log(e);

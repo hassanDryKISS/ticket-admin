@@ -1,20 +1,17 @@
 
 import {
-  Button, Modal, Row, Col, Typography, Steps, Select, Form, Table, Card, Tooltip, Drawer, Checkbox,
-  Input,
-  InputNumber
+  Button, Modal, Row, Col, Typography, Form, Table, Card, Tooltip, Drawer,
+  Input
 } from 'antd';
 import notif from '../../../utilities/Functions/Notification'
 
 
 import * as React from 'react';
-import { CalendarOutlined, ContainerOutlined, SettingOutlined, QuestionCircleOutlined, QuestionCircleFilled, PlusCircleFilled, ArrowRightOutlined, EditFilled, DashboardOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { QuestionCircleFilled,  ArrowRightOutlined, EditFilled,  UnorderedListOutlined } from '@ant-design/icons';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
-import  EditEventInventoryList  from './EditEventInventoryList'
-const { Step } = Steps;
-const { Option } = Select;
+import EditEventInventoryList from './EditEventInventoryList'
 
 const { Title } = Typography;
 
@@ -22,12 +19,7 @@ const layout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 18 },
 };
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
-const config = {
-  rules: [{ type: 'object', required: true, message: 'Please select time!' }],
-};
+
 
 const type = 'DragbleBodyRow';
 
@@ -147,9 +139,9 @@ class EventInventoryForm extends React.Component {
           <span>
             <Tooltip title="Edit">
               <Button type="link" onClick={() => {
-                    this.setState({ type: 'edit', id: record.id })
-                    this.showDrawer()
-                  }} style={{ marginRight: 10 }}  >
+                this.setState({ type: 'edit', id: record.id })
+                this.showDrawer()
+              }} style={{ marginRight: 10 }}  >
                 <EditFilled style={{ fontSize: '18px' }} />
               </Button>
             </Tooltip>
@@ -201,6 +193,8 @@ class EventInventoryForm extends React.Component {
       case "other":
         form.setFieldsValue({ note: "Hi there!" });
         return;
+      default:
+        return '';
     }
   };
 
@@ -227,7 +221,7 @@ class EventInventoryForm extends React.Component {
 
   onCloseDrawer = () => {
     this.setState({
-      visibleDrawer: false,type : ''
+      visibleDrawer: false, type: ''
     });
   };
 
@@ -286,13 +280,13 @@ class EventInventoryForm extends React.Component {
             onCancel={this.handleCancelSetPrice}
             okText={`Save`}
           >
-            <div style={{display: 'flex'}}>
-              <div style={{ margin: 16,width:'40%' }}>
-{`Price`}
+            <div style={{ display: 'flex' }}>
+              <div style={{ margin: 16, width: '40%' }}>
+                {`Price`}
                 <Input addonBefore="$" />
               </div>
-              <div style={{ margin: 16,width:'40%' }}>
-             {`Box Office Price`}
+              <div style={{ margin: 16, width: '40%' }}>
+                {`Box Office Price`}
                 <Input addonBefore="$" />
               </div>
             </div>
@@ -303,9 +297,9 @@ class EventInventoryForm extends React.Component {
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <p>{`Some seated venues offer discounted price levels for their events (e.g. Student or Senior Citizen price levels).`}</p>
             <Button onClick={() => {
-                    this.setState({ type: 'edit' })
-                    this.showDrawer()
-                  }} >
+              this.setState({ type: 'edit' })
+              this.showDrawer()
+            }} >
               {' Add Discount Level '}
             </Button>
           </div>
@@ -316,9 +310,9 @@ class EventInventoryForm extends React.Component {
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <p>{`Allow customers to purchase merchandise or other non-ticket items in the checkout process.`}</p>
             <Button onClick={() => {
-                    this.setState({ type: 'edit', })
-                    this.showDrawer()
-                  }} >
+              this.setState({ type: 'edit', })
+              this.showDrawer()
+            }} >
               {' Add Products '}
             </Button>
           </div>
@@ -331,24 +325,24 @@ class EventInventoryForm extends React.Component {
         </Form.Item>
       </Form>
 
-     <Drawer
-          width={320}
-          title={this.state.type === 'Edit' ? "Create a new Client" : "Edit existing Client"}
-          onClose={this.onCloseDrawer}
-          visible={(this.state.visibleDrawer)}
-          bodyStyle={{ paddingBottom: 80 }}
-        >
-          {this.state.type === 'edit' && <EditEventInventoryList
-            loading_api={this.props.loading_api}
-            success={() => {
-              notif('success'
-                , 'Success',
-                ' Successfully eDit')
-              this.getClients(this.state.current, this.state.pageSize)
-              this.onClose()
-            }}
-          />}
-          {/* {this.state.type === 'edit' && <ClientEditForm
+      <Drawer
+        width={320}
+        title={this.state.type === 'Edit' ? "Create a new Client" : "Edit existing Client"}
+        onClose={this.onCloseDrawer}
+        visible={(this.state.visibleDrawer)}
+        bodyStyle={{ paddingBottom: 80 }}
+      >
+        {this.state.type === 'edit' && <EditEventInventoryList
+          loading_api={this.props.loading_api}
+          success={() => {
+            notif('success'
+              , 'Success',
+              ' Successfully eDit')
+            this.getClients(this.state.current, this.state.pageSize)
+            this.onClose()
+          }}
+        />}
+        {/* {this.state.type === 'edit' && <ClientEditForm
             loading_api={this.props.loading_api}
             id={this.state.id}
             success={() => {
@@ -359,7 +353,7 @@ class EventInventoryForm extends React.Component {
               this.onClose()
             }}
           />} */}
-        </Drawer></>
+      </Drawer></>
     )
   }
 }

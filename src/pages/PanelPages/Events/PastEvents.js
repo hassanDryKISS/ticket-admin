@@ -2,7 +2,7 @@
 import { Button, Table, Typography, Tooltip, Badge } from 'antd';
 
 import * as React from 'react';
-import { EditFilled, UnorderedListOutlined, FolderViewOutlined, DashboardOutlined, EnvironmentFilled, PlusCircleFilled } from '@ant-design/icons';
+import { EditFilled, UnorderedListOutlined, FolderViewOutlined, DashboardOutlined, EnvironmentFilled } from '@ant-design/icons';
 
 
 const { Title } = Typography;

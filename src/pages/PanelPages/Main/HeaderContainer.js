@@ -42,7 +42,7 @@ class HeaderContainer extends React.Component {
 
 
   render() {
-    const { user, toggle, collapsed } = this.props
+    const { user } = this.props
 
     const userAction = (
       <div className="profile-container">

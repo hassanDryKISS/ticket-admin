@@ -1,14 +1,12 @@
 
 import {
-  Button, Divider, Row, Col, Typography, Steps, Select, Form, Card, Tooltip, DatePicker, Checkbox,
+  Button, Divider, Typography, Select, Form, Card, Tooltip, DatePicker, Checkbox,
   Input
 } from 'antd';
 
 import * as React from 'react';
-import { CalendarOutlined, ContainerOutlined, SettingOutlined, QuestionCircleOutlined, QuestionCircleFilled, PlusCircleFilled, ArrowRightOutlined } from '@ant-design/icons';
+import { QuestionCircleFilled, PlusCircleFilled, ArrowRightOutlined } from '@ant-design/icons';
 
-import { Link } from 'react-router-dom'
-const { Step } = Steps;
 const { Option } = Select;
 
 const { Title } = Typography;
@@ -17,9 +15,7 @@ const layout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 8 },
 };
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
+
 const config = {
   rules: [{ type: 'object', required: true, message: 'Please select time!' }],
 };
@@ -50,6 +46,8 @@ class EventDetailsForm extends React.Component {
       case "other":
         form.setFieldsValue({ note: "Hi there!" });
         return;
+        default:
+         return '';
     }
   };
 
@@ -106,7 +104,7 @@ class EventDetailsForm extends React.Component {
 
 
         <Card title="Date and Time (DD/MM/YYYY)" size="small" type="inner" style={{ marginBottom: '20px' }}>
-          <Form.Item name="even-start"  label="Event Starts Date" {...config} >
+          <Form.Item name="even-start" label="Event Starts Date" {...config} >
             {getFieldDecorator('even-start', {
               rules: [{ required: true, message: 'Please select start event' }],
             })(
@@ -115,7 +113,7 @@ class EventDetailsForm extends React.Component {
 
           </Form.Item>
           <Divider />
-          <Form.Item name="even-start"  label={<>
+          <Form.Item name="even-start" label={<>
             Online Sales Open
             <Tooltip placement="top" title="Tickets will be available for purchase online on this date/time.">
               <QuestionCircleFilled style={{ marginTop: '10px', }} />
@@ -134,7 +132,7 @@ class EventDetailsForm extends React.Component {
           </Form.Item>
           <Divider />
 
-          <Form.Item name="even-start"  label={<>
+          <Form.Item name="even-start" label={<>
             Online Sales End
             <Tooltip placement="top" title="Tickets will no longer be available for purchase on this date/time.">
               <QuestionCircleFilled style={{ marginTop: '10px', }} />
@@ -155,7 +153,7 @@ class EventDetailsForm extends React.Component {
 
 
         <Card title="About Your Event" size="small" type="inner" style={{ marginBottom: '20px' }}>
-          <Form.Item labelCol={{ span: 4 }} wrapperCol={{ span: 8}} name="kindof" label="What kind of event is this?" rules={[{ required: true }]}>
+          <Form.Item labelCol={{ span: 4 }} wrapperCol={{ span: 8 }} name="kindof" label="What kind of event is this?" rules={[{ required: true }]}>
             <Select
               placeholder="Community"
               onChange={this.onVenusChange}
@@ -170,7 +168,7 @@ class EventDetailsForm extends React.Component {
           </Form.Item>
         </Card>
 
-        <Form.Item labelCol={{ span: 18 }} wrapperCol={{ span: 4}}>
+        <Form.Item labelCol={{ span: 18 }} wrapperCol={{ span: 4 }}>
           <Button loading={this.props.loading_api} type="primary" htmlType="submit" className="login-form-button">
             {' Save and Continue '} <ArrowRightOutlined />
           </Button>
