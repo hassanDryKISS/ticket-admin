@@ -1,7 +1,6 @@
 
 import {
-  Button, Row, Col, Steps, Popover,
-
+  Button, Row, Col, Steps,
 } from 'antd';
 
 import * as React from 'react';
