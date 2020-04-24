@@ -145,21 +145,7 @@ class ClientList extends React.Component {
         <Row >
           <Col xs={24}>
             <div>
-              <Modal
-                title=""
-                visible={this.state.visibleNumbersModal}
-                footer={null}
-                // onOk={this.handleOk}
-                onCancel={this.onClose}
-              >
-
-                <p>This is a snapshot of your recent ticket sales. The real-time data in this visual is current and accurate when you open the Dashboard; however, the data does not automatically reload and update as sales continue to happen.
-
-Refresh the page to reload the visual and view up-to-the-minute information.
-
-Note: Ticket Revenue is the amount of revenue generated after discounts from ticket sales. This total is only based on the face value of tickets sold and does not include fees</p>
               
-              </Modal>
             
 
             <PageHeader
@@ -234,6 +220,21 @@ Note: Ticket Revenue is the amount of revenue generated after discounts from tic
           <DashboardDescription />
         </Col>
       </Row>
+      <Modal
+                title=""
+                visible={this.state.visibleNumbersModal}
+                footer={null}
+                // onOk={this.handleOk}
+                onCancel={this.onClose}
+              >
+
+                <p>This is a snapshot of your recent ticket sales. The real-time data in this visual is current and accurate when you open the Dashboard; however, the data does not automatically reload and update as sales continue to happen.
+
+Refresh the page to reload the visual and view up-to-the-minute information.
+
+Note: Ticket Revenue is the amount of revenue generated after discounts from ticket sales. This total is only based on the face value of tickets sold and does not include fees</p>
+              
+              </Modal>
       </AnimatedWayPointDiv >
     );
   }

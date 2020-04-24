@@ -1,6 +1,6 @@
 
 import { AnimatedWayPointDiv } from '../../../utilities/components/AnimatedWayPoint'
-import { Drawer, Table, Button, Tooltip, Icon, Popconfirm } from 'antd';
+import { Drawer, Table, Button, Tooltip, Icon, Modal, Form, Input, Radio } from 'antd';
 import Filter from '../../../utilities/Functions/ListDynamicFilter'
 
 import notif from '../../../utilities/Functions/Notification'
@@ -22,7 +22,7 @@ class VenueList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false,
+      visibleDuplicateModal: false,
       type: 'add',
       data: [
         {
@@ -139,6 +139,7 @@ class VenueList extends React.Component {
             </Tooltip>
             <Tooltip title="Duplicate">
               <Button onClick={() => {
+                this.setState({ id: record.id, visibleDuplicateModal: true })
               }} style={{ marginRight: 10 }} type="primary" shape="circle">
                 <CopyOutlined />
               </Button>
@@ -236,7 +237,7 @@ class VenueList extends React.Component {
           dataSource={this.state.data}
           onChange={this.onChange} />
         <Drawer
-          width={320}
+          width={600}
           title={this.state.type === 'add' ? "Create a new Venue" : "Edit Venue"}
           onClose={this.onClose}
           visible={(this.state.visible)}
@@ -264,6 +265,52 @@ class VenueList extends React.Component {
             }}
           />}
         </Drawer>
+        <Modal
+          title=""
+          visible={this.state.visibleDuplicateModal}
+          footer={null}
+          // onOk={this.handleOk}
+          onCancel={()=> this.setState({visibleDuplicateModal : false})}
+        >
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Item label="Name" >
+              {this.props.form.getFieldDecorator('name', {
+                rules: [{ required: true, message: 'Please input name of Venue' }],
+              })(
+                <Input
+                  placeholder="Venue Name"
+                />,
+              )}
+            </Form.Item>
+            <Form.Item label="Seating Chart Name " >
+              {this.props.form.getFieldDecorator('name', {
+                rules: [{ required: true, message: 'Please input Seating Chart Name ' }],
+              })(
+                <Input
+                  placeholder="Seating Chart Name "
+                />,
+              )}
+            </Form.Item>
+
+            <Form.Item layout="inline" name="radio-button" label="Link to same sellers?">
+              <Radio.Group>
+                <Radio value="a">Yes</Radio>
+                <Radio value="b">No</Radio>
+              </Radio.Group>
+            </Form.Item>
+
+            <Form.Item >
+              <Button loading={this.props.loading_api} type="primary" htmlType="submit" className="">
+                {'Submit Duplicated Venue'}
+              </Button>
+              <Button style={{marginLeft: '10px'}}loading={this.props.loading_api}  className="" onClick={()=> this.setState({visibleDuplicateModal : false})}>
+                {'Cancel'}
+              </Button>
+            </Form.Item>
+          </Form>
+
+
+        </Modal>
       </AnimatedWayPointDiv>
     );
   }
@@ -280,4 +327,5 @@ const mapStateToProps = (state) => ({
   loading_api: state.param[Param.LOADING_API]
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(VenueList)
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create({ name: 'venue-Duplicated' })(VenueList))
