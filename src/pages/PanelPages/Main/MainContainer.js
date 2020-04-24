@@ -10,6 +10,7 @@ import {
   DashboardFilled,
   CalendarFilled,
   SettingFilled,
+  BoldOutlined,
 } from '@ant-design/icons';
 
 const { Content } = Layout;
@@ -42,6 +43,11 @@ class MainContainer extends React.Component {
           text: 'Manage',
           page: '/manage',
           icon: <SettingFilled />,
+          subMenu: []
+        }, {
+          text: 'BoxOffice',
+          page: '/box-office',
+          icon: <BoldOutlined />,
           subMenu: []
         },
 

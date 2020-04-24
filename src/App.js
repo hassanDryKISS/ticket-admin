@@ -19,6 +19,7 @@ import Manager from './pages/PanelPages/Manager'
 import CreateEvent from './pages/PanelPages/Events/CreateEvent'
 import Event from './pages/PanelPages/Events/Event'
 import Venue from './pages/PanelPages/Venues/VenueList'
+import BoxOffice from './pages/PanelPages/BoxOffice'
 
 
 //Main Container
@@ -56,6 +57,10 @@ class App extends React.Component {
                     <Route exact={true} path="/"
                         render={(props) => {
                             return <Login {...props} />;
+                        }} />
+                         <Route exact={true} path="/box-office"
+                        render={(props) => {
+                            return <BoxOffice {...props} />;
                         }} />
                     <Route>
                         <Switch>
