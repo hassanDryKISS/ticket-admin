@@ -25,7 +25,7 @@ export function checkUserAuthorized(isRequested = false) {
                     saveToken(token, () => {
                         saveUserInformation(user_information, () => {
                             if(isRequested){
-                                history.push('/clients')
+                                history.push('/dashboard')
                             }
                         })
                     })
@@ -52,7 +52,7 @@ export function signIn(token, user_information) {
             notif('success'
                 , 'Success',
                 'You have Successfully loged in to Ticket Dashboard')
-            window.location.replace('/clients')
+            window.location.replace('/dashboard')
         })
     })
 }

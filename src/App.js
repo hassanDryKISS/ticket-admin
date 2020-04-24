@@ -10,15 +10,15 @@ import { connect } from 'react-redux'
 import * as Param from './redux/Param'
 import history from './redux/history'
 
-import { checkUserAuthorized } from './utilities/Functions/SetupFunctions'
+// import { checkUserAuthorized } from './utilities/Functions/SetupFunctions'
 
-
-//Company admin pages
-import ClientList from './pages/PanelPages/Client/ClientList'
+// import ClientList from './pages/PanelPages/Client/ClientList'
 import Dashboard from './pages/PanelPages/Dashboard/Dashboard'
 import Events from './pages/PanelPages/Events/Events'
+import Manager from './pages/PanelPages/Manager'
 import CreateEvent from './pages/PanelPages/Events/CreateEvent'
 import Event from './pages/PanelPages/Events/Event'
+import Venue from './pages/PanelPages/Venues/VenueList'
 
 
 //Main Container
@@ -59,40 +59,43 @@ class App extends React.Component {
                         }} />
                     <Route>
                         <Switch>
-
                             <MainContainer
                                 page={this.state.page}
                                 subPage={this.state.subPage}
                                 history={history}
                             >
-                                <Route exact={true} path="/clients"
-                                    render={(props) => {
-                                        this.onRouteChanged('Clients', '/');
-                                        return <ClientList {...props} />;
-                                    }} />
                                 <Route exact={true} path="/dashboard"
                                     render={(props) => {
                                         this.onRouteChanged('Dashboard', '/');
                                         return <Dashboard {...props} />
                                     }} />
-                                    <Route exact={true} path="/events-dashboard"
+                                <Route exact={true} path="/events-dashboard"
                                     render={(props) => {
                                         this.onRouteChanged('Events', '/');
                                         return <Events {...props} />
                                     }} />
-                                    <Route exact={true} path="/events/create"
+                                <Route exact={true} path="/events/create"
                                     render={(props) => {
                                         this.onRouteChanged('Events', '/');
                                         return <CreateEvent {...props} />
                                     }} />
-                            <Route exact={true} path="/event"
+
+                                <Route exact={true} path="/event"
                                     render={(props) => {
                                         this.onRouteChanged('Events', '/');
                                         return <Event {...props} />
                                     }} />
-                            </MainContainer>
-
-
+                                <Route exact={true} path="/manage"
+                                    render={(props) => {
+                                        this.onRouteChanged('Manage', '/');
+                                        return <Manager {...props} />
+                                    }} />
+                                     <Route exact={true} path="/venues"
+                                    render={(props) => {
+                                        this.onRouteChanged('Manage', '/');
+                                        return <Venue {...props} />
+                                    }} />
+                           </MainContainer>
                         </Switch>
                     </Route>
                 </Switch>

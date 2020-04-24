@@ -113,7 +113,7 @@ export default class BaseDomainService extends Component {
                 logout()
             }
             if (ex.response.status === 403) {
-                history.push('/clients')
+                history.push('/dashboard')
             }
         }
         catch (error) {

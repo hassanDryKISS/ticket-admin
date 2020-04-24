@@ -39,7 +39,7 @@ class MainContainer extends React.Component {
           ]
         },
         {
-          text: 'Manager',
+          text: 'Manage',
           page: '/manage',
           icon: <SettingFilled />,
           subMenu: []

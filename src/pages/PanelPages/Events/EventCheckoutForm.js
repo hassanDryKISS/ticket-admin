@@ -180,7 +180,7 @@ class EventInventoryForm extends React.Component {
                 <Radio value={2}>No</Radio>
               </Radio.Group>
             </Col>
-            <Col xs={24} md={8}><Form.Item label={
+            <Col xs={24} md={8}><Form.Item label={ 
               <>
                 Checkout Time Limit
                 {/* <Tooltip placement="Checkout Time Limit"
