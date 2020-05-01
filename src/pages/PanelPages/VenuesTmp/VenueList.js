@@ -1,6 +1,6 @@
 
 import { AnimatedWayPointDiv } from '../../../utilities/components/AnimatedWayPoint'
-import { Drawer, Table, Button, Tooltip, Icon, Popconfirm } from 'antd';
+import { Drawer, Table, Button, Tooltip, Icon } from 'antd';
 import Filter from '../../../utilities/Functions/ListDynamicFilter'
 
 import notif from '../../../utilities/Functions/Notification'
@@ -183,7 +183,7 @@ class VenueList extends React.Component {
   }
 
   confirmDelete(e, record) {
-    this.VenueServices.delete(record.id, (response) => {
+    this.VenueServices.delete(record.id, () => {
       notif('success'
         , 'Success',
         'Venue Successfully deleted')

@@ -2,7 +2,7 @@
 import { AnimatedWayPointDiv } from '../../../utilities/components/AnimatedWayPoint'
 import { Drawer, Table, Button, Tooltip, Icon, Modal, Form, Input, Radio } from 'antd';
 import Filter from '../../../utilities/Functions/ListDynamicFilter'
-
+import { Link } from 'react-router-dom'
 import notif from '../../../utilities/Functions/Notification'
 import VenueApis from '../../../api/componentApi/ClientApis'
 import * as Param from '../../../redux/Param'
@@ -211,10 +211,12 @@ class VenueList extends React.Component {
   render() {
     return (
       <AnimatedWayPointDiv>
-        <Button onClick={() => {
-          this.setState({ type: 'add' })
-          this.showDrawer()
-        }} style={{ marginBottom: 20 }} type="primary" icon="plus">Create Venue</Button>
+        <Link to="/venues/create">
+          <Button onClick={() => {
+            // this.setState({ type: 'add' })
+            // this.showDrawer()
+          }} style={{ marginBottom: 20 }} type="primary" icon="plus">Create Venue</Button>
+        </Link>
 
         <Filter
           filters={this.state.filters}
@@ -237,7 +239,7 @@ class VenueList extends React.Component {
           dataSource={this.state.data}
           onChange={this.onChange} />
         <Drawer
-          width={600}
+          width={this.state.type === 'add' ? '100%' : '600'}
           title={this.state.type === 'add' ? "Create a new Venue" : "Edit Venue"}
           onClose={this.onClose}
           visible={(this.state.visible)}
@@ -270,7 +272,7 @@ class VenueList extends React.Component {
           visible={this.state.visibleDuplicateModal}
           footer={null}
           // onOk={this.handleOk}
-          onCancel={()=> this.setState({visibleDuplicateModal : false})}
+          onCancel={() => this.setState({ visibleDuplicateModal: false })}
         >
           <Form onSubmit={this.handleSubmit}>
             <Form.Item label="Name" >
@@ -303,7 +305,7 @@ class VenueList extends React.Component {
               <Button loading={this.props.loading_api} type="primary" htmlType="submit" className="">
                 {'Submit Duplicated Venue'}
               </Button>
-              <Button style={{marginLeft: '10px'}}loading={this.props.loading_api}  className="" onClick={()=> this.setState({visibleDuplicateModal : false})}>
+              <Button style={{ marginLeft: '10px' }} loading={this.props.loading_api} className="" onClick={() => this.setState({ visibleDuplicateModal: false })}>
                 {'Cancel'}
               </Button>
             </Form.Item>
