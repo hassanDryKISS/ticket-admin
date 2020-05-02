@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Spin } from 'antd';
 
 class SeatPicker extends React.Component {
   constructor(props) {
@@ -11,28 +12,24 @@ class SeatPicker extends React.Component {
 
   }
   handleClick = (e) => {
-    const { id, seat, state } = e.target.dataset;
-    if (state !== '1' && state !== '5') {
-      return
-    }
+    const { id, value } = e.target.dataset;
+    this.props.handleChangeStatus(value, id)
 
-    const { addSeat, removeSeat, selectSeats } = this.props;
-    const isSelectBefore = selectSeats.find((item) => item.id === id);
-    if (!isSelectBefore) {
-      addSeat(JSON.parse(seat), () => { });
-    } else {
-      removeSeat(JSON.parse(seat), () => console.log('remove call back'))
-    }
+    // if (state !== '1' && state !== '5') {
+    //   return
+    // }
+
+    // const { addSeat, removeSeat, selectSeats } = this.props;
+    // const isSelectBefore = selectSeats.find((item) => item.id === id);
+    // if (!isSelectBefore) {
+    //   addSeat(JSON.parse(seat), () => { });
+    // } else {
+    //   removeSeat(JSON.parse(seat), () => console.log('remove call back'))
+    // }
   }
 
 
   renderState = (state, id) => {
-    // const isSelect = this.props.selectSeats.find((item) => item.id === id);
-    // if (isSelect) {
-    //   return 'select'
-    // } else {
-
-    // }
     switch (state) {
       case 0:
         return 'disable'
@@ -45,6 +42,14 @@ class SeatPicker extends React.Component {
         return 'red'
       case 5:
         return 'blue'
+      case '0':
+        return 'red'
+      case '1':
+        return 'blue'
+      case '2':
+        return 'green'
+      case '7':
+        return 'separator'
       default:
         return 'default'
     }
@@ -69,68 +74,117 @@ class SeatPicker extends React.Component {
   */
 
   renderTooltip = (seat) => {
-   return <div class="tooltip-box">
-      <div>name: {seat.name}</div>
-      <div className="tooltip-item" onClick={(e) => this.props.handleChangeStatus('0', seat.id)} >
-        <input type="radio" name="status" value="0" checked={seat.status === '0'} />
-        <label >Not Available</label>
-        <span className=""></span>
+    return <div class="tooltip-box">
+      <div className="tooltip-container">
+        <div>name: {seat.name} price : {seat.price}$</div>
+        <div className="tooltip-item"
+          data-id={seat.id}
+          data-value="1"
+        >
+
+          <input type="radio"
+            name={`state${seat.id}`}
+            value="1"
+            checked={seat.state == 1}
+            data-id={seat.id}
+            data-value="1"
+          />
+          Available
+        </div>
+        <div className="tooltip-item"
+          data-id={seat.id}
+          data-value="2"
+        >
+          <input type="radio"
+            name={`state${seat.id}`}
+            value="2"
+            checked={seat.state == 2}
+            data-id={seat.id}
+            data-value="2"
+          />
+          Reserved
+        </div>
+        <div className="tooltip-item"
+          data-id={seat.id}
+          data-value="0"
+        >
+          <input type="radio"
+            name={`state${seat.id}`}
+            value="0"
+            checked={seat.state == 0}
+            data-id={seat.id}
+            data-value="0"
+          />
+          Not Available
+        </div>
+
+        <div className="tooltip-item"
+          data-id={seat.id}
+          data-value="7"
+        >
+          <input type="radio"
+            name={`state${seat.id}`}
+            value="7"
+            checked={seat.state == 7}
+            data-id={seat.id}
+            data-value="7"
+          />
+          Empty
+        </div>
       </div>
 
-      <div className="tooltip-item" onClick={() => this.props.handleChangeStatus('1', seat.id)} >
-        <input type="radio" name="status" value="1" checked={seat.status === '1'} />
-        <label>Available</label>
-        <span className=""></span>
-      </div>
-
-
-      <div className="tooltip-item" onClick={(e) => this.props.handleChangeStatus('2', seat.id)} >
-        <input type="radio" name="status" value="6" checked={seat.status === '2'} />
-        <label>Reserved</label>
-        <span className=""></span>
-      </div>
-
-
-      <div className="tooltip-item" onClick={() => this.props.handleChangeStatus('7', seat.id)} >
-        <input type="radio" name="status" value="7" checked={seat.status === '7'} />
-        <label>Empty</label>
-        <span className=""></span>
-      </div>
 
     </div>
   }
 
 
   render() {
-    const { rows } = this.props;
+    const { rows, loading } = this.props;
+    console.log(loading)
     return (
-      <div className="seat-picker" onClick={(e) => this.handleClick(e)}>
-        {
-          rows.map((row, index) => {
-            return <div className="row" key={index}>
-              {row.map((seat, seatIndex) => {
-                if (seatIndex === 0) {
-                  return <>
-                    <div className="seat-name" data-disable={true} key={seatIndex}>{index + 1}</div>
-                    {(seat == null) ? <div className="seat separator" key={seatIndex}>00</div> :
-                      <div className={`seat ${this.renderState(seat.state, seat.id)}`}
-                      >{seat.name}</div>
-                    }
-                  </>
-                }
-                if (seat == null) return <div className="seat separator" key={seatIndex}>00</div>
-                return <div className={`seat tooltip ${this.renderState(seat.state, seat.id)}`}
-                  data-id={seat.id}
-                  data-seat={JSON.stringify(seat)}
-                  data-state={seat.state}
-                  key={seat.id}
+      <>
+        {loading ? <div className="seat-picker">
+        <Spin size="large" style={{position: 'absolute', top: '50%', left : '50%', transform: 'translate(-50%,-50%)'}} /> 
+        </div> : <>
 
-                >{seat.name}{this.renderTooltip(seat)} </div>
-              })}
-            </div>
-          })
-        }
-      </div>
+          <div className="seat-picker" onClick={(e) => this.handleClick(e)}>
+            {
+              rows.map((row, index) => {
+                return <div className="row" key={index}>
+                  {row.map((seat, seatIndex) => {
+                    if (seatIndex === 0) {
+                      return <>
+                        <div className="seat-name" data-disable={true} key={seatIndex}>
+
+                          {index + 1 >= 10 ? index + 1 : `0${index + 1}`}
+
+                        </div>
+                        {(seat == null) ? <div className="seat tooltip separator" key={seatIndex}>00
+    
+                    {this.renderTooltip(seat)}
+                        </div> :
+                          <div className={`seat tooltip ${this.renderState(seat.state, seat.id)}`}
+                          >{seat.name}
+                            {this.renderTooltip(seat)}
+                          </div>
+                        }
+                      </>
+                    }
+                    if (seat == null) return <div className="seat separator" key={seatIndex}>00</div>
+                    return <div className={`seat tooltip ${this.renderState(seat.state, seat.id)}`}
+                      data-id={seat.id}
+                      data-seat={JSON.stringify(seat)}
+                      data-state={seat.state}
+                      key={seat.id}
+
+                    >{seat.name}{this.renderTooltip(seat)} </div>
+                  })}
+                </div>
+              })
+            }
+          </div></>}
+      </>
+
     );
   }
 }

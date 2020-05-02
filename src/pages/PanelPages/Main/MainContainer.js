@@ -109,7 +109,6 @@ class MainContainer extends React.Component {
 
 
   render() {
-    console.log('________', this.props.children)
     return (
       <Layout className="full-window">
         <SideMenu
