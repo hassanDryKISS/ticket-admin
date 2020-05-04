@@ -8,6 +8,9 @@ export default class AuthApis {
         this.services = new BaseDomainService()
     }
 
+
+    
+
     handleError(ex) {
         try {
             notif('error'
