@@ -55,7 +55,7 @@ class App extends React.Component {
         return (
             <Router history={history} >
                 <Switch>
-                    <Route exact={true} path="/"
+                    <Route exact={true} path="/login"
                         render={(props) => {
                             return <Login {...props} />;
                         }} />
@@ -74,7 +74,12 @@ class App extends React.Component {
                                 subPage={this.state.subPage}
                                 history={history}
                             >
-                                <Route exact={true} path="/dashboard"
+                                <Route exact={true} path="/"
+                                    render={(props) => {
+                                        this.onRouteChanged('Dashboard', '/');
+                                        return <Dashboard {...props} />
+                                    }} /> 
+                                    <Route exact={true} path="/dashboard"
                                     render={(props) => {
                                         this.onRouteChanged('Dashboard', '/');
                                         return <Dashboard {...props} />
