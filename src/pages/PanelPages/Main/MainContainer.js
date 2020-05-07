@@ -10,7 +10,7 @@ import {
   CalendarFilled,
   SettingFilled,
   BoldOutlined,
-  BarChartOutlined
+  AreaChartOutlined
 } from "@ant-design/icons";
 
 const { Content } = Layout;
@@ -51,7 +51,7 @@ class MainContainer extends React.Component {
         {
           text: "Reports",
           page: "/reports",
-          icon: <BarChartOutlined />,
+          icon: <AreaChartOutlined />,
           subMenu: [],
         },
       ],

@@ -18,6 +18,7 @@ import Venue from "./pages/PanelPages/Venues/VenueList";
 import CreateVenue from "./pages/PanelPages/Venues/VenueAddForm";
 import BoxOffice from "./pages/PanelPages/BoxOffice";
 import Reports from "./pages/PanelPages/Reports/Reports";
+import DetailsReport from "./pages/PanelPages/Reports/DetailsReport";
 
 //Main Container
 import MainContainer from "./pages/PanelPages/Main/MainContainer";
@@ -140,6 +141,14 @@ class App extends React.Component {
                   render={(props) => {
                     this.onRouteChanged("Reports", "/");
                     return <Reports {...props} />;
+                  }}
+                /> 
+                <Route
+                  exact={true}
+                  path="/reports/report/:name"
+                  render={(props) => {
+                    this.onRouteChanged("Reports", "/");
+                    return <DetailsReport {...props} />;
                   }}
                 />
               </MainContainer>
