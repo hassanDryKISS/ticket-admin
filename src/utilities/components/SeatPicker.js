@@ -140,7 +140,6 @@ class SeatPicker extends React.Component {
 
   render() {
     const { rows, loading } = this.props;
-    console.log(loading)
     return (
       <>
         {loading ? <div className="seat-picker">
