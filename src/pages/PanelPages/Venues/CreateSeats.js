@@ -1,7 +1,15 @@
 import * as React from "react";
-import { Input, InputNumber, Row, Col, Button, Form, Radio } from "antd";
+import {
+  Input,
+  InputNumber,
+  Row,
+  Col,
+  Button,
+  Form,
+  Radio,
+  Checkbox,
+} from "antd";
 import SeatPicker from "../../../utilities/components/SeatPicker";
-
 
 const layout = {
   labelCol: {
@@ -22,6 +30,10 @@ class CreateSeats extends React.Component {
       price: 0,
       state: "1",
       loading: false,
+      isRowAlphabet: false,
+      isRowRevers: false, 
+      isColAlphabet: false,
+      isColRevers: false,
       rows: [[]],
     };
   }
@@ -43,30 +55,28 @@ class CreateSeats extends React.Component {
   };
 
   createRowsArray = async () => {
-    console.log('start')
-    const { row, col, price, state } = this.state;
-    const worker = new Worker('/WebWorker.js');
+    console.log("start");
+    const { row, col, price, state,isRowAlphabet,isRowRevers } = this.state;
+    const worker = new Worker("/WebWorker.js");
 
-    worker.postMessage({ row, col, price, state  }); 
-     worker.onmessage =async event => { 
-        await this.setState(
-          {
-            loading: false,
-            rows : event.data,
-          },
-          () => console.log("this.state.loading")
-          );
-
+    worker.postMessage({ row, col, price, state,isRowAlphabet,isRowRevers });
+    worker.onmessage = async (event) => {
+      await this.setState(
+        {
+          loading: false,
+          rows: event.data,
+        },
+        () => console.log("this.state.loading")
+      );
     };
-    return
-
+    return;
 
     // const { row, col, price, state } = this.state;
     let newRows = [];
 
     for (let i = 0; i < row; i++) {
       newRows[i] = [];
-      console.log('fooor')
+      console.log("fooor");
       for (let j = 0; j < col; j++) {
         await newRows[i].push({
           id: `${i + 1}-${j + 1}`,
@@ -76,15 +86,15 @@ class CreateSeats extends React.Component {
         });
       }
     }
-    console.log('befor set state')
+    console.log("befor set state");
     await this.setState(
       {
         loading: false,
-        rows : newRows,
+        rows: newRows,
       },
       () => console.log("this.state.loading")
-      );
-    };
+    );
+  };
 
   componentDidMount() {
     this._isMounted = true;
@@ -135,7 +145,6 @@ class CreateSeats extends React.Component {
   };
 
   render() {
-    console.log('RENDERRRRRRR', this.state)
     return (
       <div className="create-seat">
         <Row gutter={[8, 8]}>
@@ -145,6 +154,8 @@ class CreateSeats extends React.Component {
               <div className="space"></div>
               <SeatPicker
                 rows={this.state.rows}
+                isRowAlphabet={this.state.isRowAlphabet}
+                isRowRevers={this.state.isRowRevers}
                 handleChangeStatus={this.handleChangeStatus}
                 loading={this.state.loading}
               />
@@ -176,7 +187,17 @@ class CreateSeats extends React.Component {
                     value={this.state.row}
                     onChange={this.onChangeRow}
                   />
+                
+               <div>
+               <Checkbox onChange={(e)=> this.setState({isRowAlphabet: e.target.checked})} value={this.state.isRowAlphabet}>
+                    Row Name Alphabet
+                  </Checkbox>
+                  <Checkbox style={{margin: 0}}onChange={(e)=> this.setState({isRowRevers: e.target.checked})} value={this.state.isRowRevers}>
+                    is Row Name Revers?
+                  </Checkbox>
+               </div>
                 </Form.Item>
+             
                 <Form.Item name="column" label="Column">
                   <InputNumber
                     min={1}
@@ -185,8 +206,16 @@ class CreateSeats extends React.Component {
                     value={this.state.col}
                     onChange={this.onChangeCol}
                   />
+                   <div>
+               <Checkbox onChange={(e)=> this.setState({isColAlphabet: e.target.checked})} value={this.state.isColAlphabet}>
+                    Column Name Alphabet
+                  </Checkbox>
+                  <Checkbox style={{margin: 0}} onChange={(e)=> this.setState({isColRevers: e.target.checked})} value={this.state.isColRevers}>
+                    is Column Name Revers?
+                  </Checkbox>
+               </div>
                 </Form.Item>
-                <Form.Item name="price" label="Price">
+                {/* <Form.Item name="price" label="Price">
                   <InputNumber
                     defaultValue={this.state.price}
                     formatter={(value) =>
@@ -195,7 +224,7 @@ class CreateSeats extends React.Component {
                     parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
                     onChange={this.onChangePrice}
                   />
-                </Form.Item>
+                </Form.Item> */}
 
                 <Form.Item
                   name="state"
@@ -208,8 +237,8 @@ class CreateSeats extends React.Component {
                     value={this.state.state}
                   >
                     <Radio value="1">Available</Radio>
-                    <Radio value="2">Reserved</Radio>
-                    <Radio value="0">Not Available</Radio>
+                    {/* <Radio value="2">Reserved</Radio>
+                    <Radio value="0">Not Available</Radio> */}
                     <Radio value="7">Empty</Radio>
                   </Radio.Group>
                 </Form.Item>
