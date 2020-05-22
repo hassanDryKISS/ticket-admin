@@ -75,6 +75,16 @@ class SeatPicker extends React.Component {
           <div>
             name: {seat.name} price : {seat.price}$
           </div>
+          <div className="tooltip-item" data-id={seat.id}>
+            <input
+              type="text"
+              name={`name${seat.id}`}
+              value={seat.name}
+     
+              data-id={seat.id}
+            />
+            Name
+          </div>
           <div className="tooltip-item" data-id={seat.id} data-value="1">
             <input
               type="radio"
@@ -86,7 +96,7 @@ class SeatPicker extends React.Component {
             />
             Available
           </div>
-          <div className="tooltip-item" data-id={seat.id} data-value="2">
+          {/* <div className="tooltip-item" data-id={seat.id} data-value="2">
             <input
               type="radio"
               name={`state${seat.id}`}
@@ -107,7 +117,7 @@ class SeatPicker extends React.Component {
               data-value="0"
             />
             Not Available
-          </div>
+          </div> */}
 
           <div className="tooltip-item" data-id={seat.id} data-value="7">
             <input
@@ -154,6 +164,8 @@ class SeatPicker extends React.Component {
         : alphabet.reverse()[26 - (rowLength - index )].toUpperCase();
     }
   };
+
+
 
   render() {
     const { rows, loading } = this.props;

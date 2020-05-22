@@ -20,7 +20,6 @@ const layout = {
   },
 };
 class CreateSeats extends React.Component {
-  _isMounted = false;
   constructor(props) {
     super(props);
     this.state = {
@@ -32,8 +31,8 @@ class CreateSeats extends React.Component {
       loading: false,
       isRowAlphabet: false,
       isRowRevers: false, 
-      isColAlphabet: false,
       isColRevers: false,
+      isColOdd: false,
       rows: [[]],
     };
   }
@@ -56,10 +55,10 @@ class CreateSeats extends React.Component {
 
   createRowsArray = async () => {
     console.log("start");
-    const { row, col, price, state,isRowAlphabet,isRowRevers } = this.state;
+    const { row, col, price, state,isRowAlphabet,isRowRevers, isColOdd,isColRevers } = this.state;
     const worker = new Worker("/WebWorker.js");
 
-    worker.postMessage({ row, col, price, state,isRowAlphabet,isRowRevers });
+    worker.postMessage({ row, col, price, state,isRowAlphabet,isRowRevers, isColOdd,isColRevers});
     worker.onmessage = async (event) => {
       await this.setState(
         {
@@ -96,14 +95,14 @@ class CreateSeats extends React.Component {
     );
   };
 
-  componentDidMount() {
-    this._isMounted = true;
+  // componentDidMount() {
+  //   this._isMounted = true;
 
-    this.createRowsArray();
-  }
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
+  //   this.createRowsArray();
+  // }
+  // componentWillUnmount() {
+  //   this._isMounted = false;
+  // }
 
   // componentDidUpdate(prevProps, prevState) {
   //     if (this.state.row !== prevState.row || this.state.col !== prevState.col) {
@@ -187,17 +186,28 @@ class CreateSeats extends React.Component {
                     value={this.state.row}
                     onChange={this.onChangeRow}
                   />
-                
-               <div>
-               <Checkbox onChange={(e)=> this.setState({isRowAlphabet: e.target.checked})} value={this.state.isRowAlphabet}>
-                    Row Name Alphabet
-                  </Checkbox>
-                  <Checkbox style={{margin: 0}}onChange={(e)=> this.setState({isRowRevers: e.target.checked})} value={this.state.isRowRevers}>
-                    is Row Name Revers?
-                  </Checkbox>
-               </div>
+
+                  <div>
+                    <Checkbox
+                      onChange={(e) =>
+                        this.setState({ isRowAlphabet: e.target.checked })
+                      }
+                      value={this.state.isRowAlphabet}
+                    >
+                      Row Name Alphabet
+                    </Checkbox>
+                    <Checkbox
+                      style={{ margin: 0 }}
+                      onChange={(e) =>
+                        this.setState({ isRowRevers: e.target.checked })
+                      }
+                      value={this.state.isRowRevers}
+                    >
+                      is Row Name Revers?
+                    </Checkbox>
+                  </div>
                 </Form.Item>
-             
+
                 <Form.Item name="column" label="Column">
                   <InputNumber
                     min={1}
@@ -206,14 +216,26 @@ class CreateSeats extends React.Component {
                     value={this.state.col}
                     onChange={this.onChangeCol}
                   />
-                   <div>
-               <Checkbox onChange={(e)=> this.setState({isColAlphabet: e.target.checked})} value={this.state.isColAlphabet}>
-                    Column Name Alphabet
-                  </Checkbox>
-                  <Checkbox style={{margin: 0}} onChange={(e)=> this.setState({isColRevers: e.target.checked})} value={this.state.isColRevers}>
-                    is Column Name Revers?
-                  </Checkbox>
-               </div>
+                  <div>
+                    <Checkbox
+                      onChange={(e) =>
+                        this.setState({ isColRevers: e.target.checked })
+                      }
+                      value={this.state.isColRevers}
+                    >
+                      Column Name revers
+                    </Checkbox>
+                    <Checkbox
+                      style={{ margin: 0 }}
+                      onChange={(e) =>
+                        this.setState({ isColOdd: e.target.checked })
+                      }
+                      value={this.state.isColOdd}
+                    >
+                      is Column Odd?
+                    </Checkbox>
+                
+                  </div>
                 </Form.Item>
                 {/* <Form.Item name="price" label="Price">
                   <InputNumber
