@@ -10,7 +10,8 @@ import {
   CalendarFilled,
   SettingFilled,
   BoldOutlined,
-  AreaChartOutlined
+  AreaChartOutlined,
+  TeamOutlined
 } from "@ant-design/icons";
 
 const { Content } = Layout;
@@ -46,6 +47,12 @@ class MainContainer extends React.Component {
           text: "BoxOffice",
           page: "/box-office",
           icon: <BoldOutlined />,
+          subMenu: [],
+        },
+        {
+          text: "Customer",
+          page: "/customer-results",
+          icon: <TeamOutlined />,
           subMenu: [],
         },
         {
