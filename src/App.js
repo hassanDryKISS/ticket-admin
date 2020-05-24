@@ -20,6 +20,7 @@ import BoxOffice from "./pages/PanelPages/BoxOffice";
 import Reports from "./pages/PanelPages/Reports/Reports";
 import CustomerResults from "./pages/PanelPages/CustomerResults/CustomerResults";
 import CustomerDetails from "./pages/PanelPages/CustomerResults/CustomerDetails";
+import OrderDetails from "./pages/PanelPages/CustomerResults/OrderDetails";
 import DetailsReport from "./pages/PanelPages/Reports/DetailsReport";
 
 //Main Container
@@ -167,6 +168,14 @@ class App extends React.Component {
                   render={(props) => {
                     this.onRouteChanged("Customer", "/");
                     return <CustomerDetails {...props} />;
+                  }}
+                /> 
+                <Route
+                  exact={true}
+                  path="/order/:orderId"
+                  render={(props) => {
+                    this.onRouteChanged("Customer", "/");
+                    return <OrderDetails {...props} />;
                   }}
                 />
               </MainContainer>

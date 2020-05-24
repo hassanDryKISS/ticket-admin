@@ -15,6 +15,8 @@ import {
   Skeleton,
   Modal,
 } from "antd";
+import {Link} from 'react-router-dom'
+
 import Filter from "../../../utilities/Functions/ListDynamicFilter";
 
 import notif from "../../../utilities/Functions/Notification";
@@ -213,7 +215,7 @@ class CustomerResults extends React.Component {
               style={{ backgroundColor: "#fff" }}
               renderItem={(item) => (
                 <List.Item
-                  actions={[<Button key="list-loadmore-edit">Details</Button>]}
+                  actions={[<Button key="list-loadmore-edit"><Link to="/customer/9090">Details</Link></Button>]}
                 >
                   <Skeleton avatar title={false} loading={item.loading} active>
                     <List.Item.Meta

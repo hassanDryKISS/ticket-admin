@@ -19,10 +19,7 @@ import {
   Select,
   Divider,
 } from "antd";
-import Filter from "../../../utilities/Functions/ListDynamicFilter";
 
-import notif from "../../../utilities/Functions/Notification";
-import VenueApis from "../../../api/componentApi/ClientApis";
 import * as Param from "../../../redux/Param";
 import { connect } from "react-redux";
 import * as React from "react";
@@ -33,6 +30,8 @@ import {
   SearchOutlined,
   EditOutlined,
 } from "@ant-design/icons";
+import {Link} from 'react-router-dom'
+
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -108,6 +107,7 @@ class CustomerResults extends React.Component {
         title: 'ORDER ID',
         dataIndex: 'id',
         key: 'id',
+        render: (id)=> <Link to="/order/909">{id}</Link>
       },
    {
         title: 'STATUS',
