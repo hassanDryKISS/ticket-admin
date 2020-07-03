@@ -7,9 +7,11 @@ import {
   Button,
   Form,
   Radio,
+  Modal,
   Checkbox,
 } from "antd";
 import SeatPicker from "../../../utilities/components/SeatPicker";
+import FormItem from "antd/lib/form/FormItem";
 
 const layout = {
   labelCol: {
@@ -26,28 +28,50 @@ class CreateSeats extends React.Component {
       blockName: "",
       row: 1,
       col: 1,
+      colEnd: 2,
+      colStp: 1,
       price: 0,
       state: "1",
       loading: false,
+      loading: false,
       isRowAlphabet: false,
-      isRowRevers: false, 
+      isRowRevers: false,
       isColRevers: false,
-      isColOdd: false,
+      colRtl: false,
+      numberColFormat: "default",
+      openEditSeatModal: false,
+      currentSeat: {
+        name: "",
+        price: 0,
+        state: "1",
+      },
       rows: [[]],
     };
   }
   formRef = React.createRef();
 
-  onChangePrice = (price) => {
-    this.setState({ price });
-  };
+  // onChangePrice = (price) => {
+  //   this.setState({ price });
+  // };
   onChangeRow = (row) => {
     const parsRow = parseInt(row);
     this.setState({ row: parsRow });
   };
-  onChangeCol = (col) => {
+  onChangeStartCol = (col) => {
     const parsCol = parseInt(col);
-    this.setState({ col: parsCol });
+    this.setState(
+      { col: parsCol },
+      () =>
+        parsCol > this.state.colEnd && this.setState({ colEnd: parsCol + 1 })
+    );
+  };
+  onChangeColEnd = (col) => {
+    const parsCol = parseInt(col);
+    this.setState({ colEnd: parsCol });
+  };
+  onChangeColStep = (col) => {
+    const parsCol = parseInt(col);
+    this.setState({ colStp: parsCol });
   };
   onChangeState = (e) => {
     this.setState({ state: e.target.value });
@@ -55,79 +79,63 @@ class CreateSeats extends React.Component {
 
   createRowsArray = async () => {
     console.log("start");
-    const { row, col, price, state,isRowAlphabet,isRowRevers, isColOdd,isColRevers } = this.state;
+    const {
+      row,
+      col,
+      colEnd,
+      colStp,
+      price,
+      state,
+      isRowAlphabet,
+      isRowRevers,
+      numberColFormat,
+      isColRevers,
+      colRtl,
+    } = this.state;
     const worker = new Worker("/WebWorker.js");
 
-    worker.postMessage({ row, col, price, state,isRowAlphabet,isRowRevers, isColOdd,isColRevers});
+    worker.postMessage({
+      row,
+      col,
+      colEnd,
+      colStp,
+      price,
+      state,
+      isRowAlphabet,
+      isRowRevers,
+      numberColFormat,
+      isColRevers,
+      colRtl,
+    });
     worker.onmessage = async (event) => {
-      await this.setState(
-        {
-          loading: false,
-          rows: event.data,
-        },
-        () => console.log("this.state.loading")
-      );
-    };
-    return;
-
-    // const { row, col, price, state } = this.state;
-    let newRows = [];
-
-    for (let i = 0; i < row; i++) {
-      newRows[i] = [];
-      console.log("fooor");
-      for (let j = 0; j < col; j++) {
-        await newRows[i].push({
-          id: `${i + 1}-${j + 1}`,
-          name: j + 1,
-          state,
-          price,
-        });
-      }
-    }
-    console.log("befor set state");
-    await this.setState(
-      {
+      await this.setState({
         loading: false,
-        rows: newRows,
-      },
-      () => console.log("this.state.loading")
-    );
+        rows: event.data,
+      });
+    };
   };
-
-  // componentDidMount() {
-  //   this._isMounted = true;
-
-  //   this.createRowsArray();
-  // }
-  // componentWillUnmount() {
-  //   this._isMounted = false;
-  // }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //     if (this.state.row !== prevState.row || this.state.col !== prevState.col) {
-  //         this.createRowsArray()
-  //     }
-  // }
 
   handleSubmit = (e) => {
     e.preventDefault();
   };
-  handleChangeStatus = (value, id) => {
+  handleChangeStatus = (currentSeat) => {
     const { rows } = this.state;
+    const { id } = this.state.currentSeat;
 
     let newRows = rows.map((row, index) => {
       let newRow = row.map((seat) => {
         if (seat && seat.id === id) {
-          seat.state = value;
+          return (seat = this.state.currentSeat);
         } else {
           return seat;
         }
       });
       return newRow;
     });
+
     this.setState({
-      rows,
+      rows: newRows,
+      openEditSeatModal: false,
     });
   };
 
@@ -143,6 +151,53 @@ class CreateSeats extends React.Component {
     );
   };
 
+  onChangeColNumberFormat = (e) => {
+    this.setState({
+      numberColFormat: e.target.value,
+    });
+  };
+
+  handleEditSeat = () => {};
+  openEditModal = (seat) => {
+    this.setState({
+      openEditSeatModal: true,
+      currentSeat: seat,
+    });
+  };
+  onChangeNameSeat = (e) => {
+    const { value } = e.target;
+    this.setState((prevState) => {
+      return {
+        currentSeat: {
+          ...prevState.currentSeat,
+          name: value,
+        },
+      };
+    });
+  };
+  // onChangePriceSeat = (value) => {
+  //   this.setState((prevState) => {
+  //     return {
+  //       currentSeat: {
+  //         ...prevState.currentSeat,
+  //         price: value,
+  //       },
+  //     };
+  //   });
+  // };
+
+  onChangeStateState = (e) => {
+    const { value } = e.target;
+    this.setState((prevState) => {
+      return {
+        currentSeat: {
+          ...prevState.currentSeat,
+          state: value,
+        },
+      };
+    });
+  };
+
   render() {
     return (
       <div className="create-seat">
@@ -156,6 +211,7 @@ class CreateSeats extends React.Component {
                 isRowAlphabet={this.state.isRowAlphabet}
                 isRowRevers={this.state.isRowRevers}
                 handleChangeStatus={this.handleChangeStatus}
+                openEditModal={this.openEditModal}
                 loading={this.state.loading}
               />
             </div>
@@ -177,77 +233,96 @@ class CreateSeats extends React.Component {
                     placeholder="Enter Block Name"
                   />
                 </Form.Item>
-
                 <Form.Item name="row" label="Row">
-                  <InputNumber
-                    min={1}
-                    max={100}
-                    pattern="\d*"
-                    value={this.state.row}
-                    onChange={this.onChangeRow}
-                  />
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <div>
+                      <InputNumber
+                        min={1}
+                        max={100}
+                        pattern="\d*"
+                        value={this.state.row}
+                        onChange={this.onChangeRow}
+                      />
+                    </div>
 
-                  <div>
-                    <Checkbox
-                      onChange={(e) =>
-                        this.setState({ isRowAlphabet: e.target.checked })
-                      }
-                      value={this.state.isRowAlphabet}
-                    >
-                      Row Name Alphabet
-                    </Checkbox>
-                    <Checkbox
-                      style={{ margin: 0 }}
-                      onChange={(e) =>
-                        this.setState({ isRowRevers: e.target.checked })
-                      }
-                      value={this.state.isRowRevers}
-                    >
-                      is Row Name Revers?
-                    </Checkbox>
+                    <div style={{ marginLeft: "5px", marginTop: "-7px" }}>
+                      <Checkbox
+                        onChange={(e) =>
+                          this.setState({ isRowAlphabet: e.target.checked })
+                        }
+                        value={this.state.isRowAlphabet}
+                      >
+                        Row Name Alphabet
+                      </Checkbox>
+                      <Checkbox
+                        style={{ margin: 0 }}
+                        onChange={(e) =>
+                          this.setState({ isRowRevers: e.target.checked })
+                        }
+                        value={this.state.isRowRevers}
+                      >
+                        is Row Name Revers?
+                      </Checkbox>
+                    </div>
                   </div>
                 </Form.Item>
-
                 <Form.Item name="column" label="Column">
-                  <InputNumber
-                    min={1}
-                    max={100}
-                    pattern="\d*"
-                    value={this.state.col}
-                    onChange={this.onChangeCol}
-                  />
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "flexEnd" }}>
+                      <span> Start Col: </span>
+                      <InputNumber
+                        style={{ marginLeft: "7px" }}
+                        min={1}
+                        max={100}
+                        pattern="\d*"
+                        value={this.state.col}
+                        onChange={this.onChangeStartCol}
+                      />
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "flexEnd" }}>
+                      <span> End Col:</span>
+                      <InputNumber
+                        style={{ marginLeft: "12px" }}
+                        min={1}
+                        max={100}
+                        pattern="\d*"
+                        value={this.state.colEnd}
+                        onChange={this.onChangeColEnd}
+                      />
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "flexEnd" }}>
+                      <span> Step: </span>
+                      <InputNumber
+                        style={{ marginLeft: "33px" }}
+                        min={1}
+                        max={5}
+                        pattern="\d*"
+                        value={this.state.colStp}
+                        onChange={this.onChangeColStep}
+                      />
+                    </div>
+                  </div>
+                  <Radio.Group
+                    onChange={this.onChangeColNumberFormat}
+                    value={this.state.numberColFormat}
+                  >
+                    <Radio value="default">default</Radio>
+                    <Radio value="odd">Only Odd</Radio>
+                    <Radio value="even">Only Even</Radio>
+                  </Radio.Group>
                   <div>
                     <Checkbox
                       onChange={(e) =>
-                        this.setState({ isColRevers: e.target.checked })
+                        this.setState({ colRtl: e.target.checked })
                       }
-                      value={this.state.isColRevers}
+                      value={this.state.colRtl}
                     >
-                      Column Name revers
+                      Col Rtl
                     </Checkbox>
-                    <Checkbox
-                      style={{ margin: 0 }}
-                      onChange={(e) =>
-                        this.setState({ isColOdd: e.target.checked })
-                      }
-                      value={this.state.isColOdd}
-                    >
-                      is Column Odd?
-                    </Checkbox>
-                
                   </div>
                 </Form.Item>
-                {/* <Form.Item name="price" label="Price">
-                  <InputNumber
-                    defaultValue={this.state.price}
-                    formatter={(value) =>
-                      `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                    }
-                    parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-                    onChange={this.onChangePrice}
-                  />
-                </Form.Item> */}
-
                 <Form.Item
                   name="state"
                   label="State Seats"
@@ -264,7 +339,6 @@ class CreateSeats extends React.Component {
                     <Radio value="7">Empty</Radio>
                   </Radio.Group>
                 </Form.Item>
-
                 <Form.Item>
                   <Button
                     type="primary"
@@ -283,6 +357,29 @@ class CreateSeats extends React.Component {
             </div>
           </Col>
         </Row>
+
+        <Modal
+          title={`Name : ${this.state.currentSeat.name}`}
+          visible={this.state.openEditSeatModal}
+          onOk={this.handleChangeStatus}
+          onCancel={() => this.setState({ openEditSeatModal: false })}
+        >
+          <FormItem label="Name">
+            <Input
+              value={this.state.currentSeat.name}
+              onChange={this.onChangeNameSeat}
+            />
+          </FormItem>
+          <FormItem label="State">
+            <Radio.Group
+              value={this.state.currentSeat.state}
+              onChange={this.onChangeStateState}
+            >
+              <Radio value="1">Available</Radio>
+              <Radio value="7">Empty</Radio>
+            </Radio.Group>
+          </FormItem>
+        </Modal>
       </div>
     );
   }

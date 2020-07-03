@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Spin } from "antd";
+import { Spin, Popover, Button } from "antd";
 
 class SeatPicker extends React.Component {
   constructor(props) {
@@ -10,7 +10,8 @@ class SeatPicker extends React.Component {
   componentDidMount() {}
   handleClick = (e) => {
     const { id, value } = e.target.dataset;
-    this.props.handleChangeStatus(value, id);
+    console.log("value", value);
+    // this.props.handleChangeStatus(value, id);
 
     // if (state !== '1' && state !== '5') {
     //   return
@@ -72,15 +73,12 @@ class SeatPicker extends React.Component {
     return (
       <div class="tooltip-box">
         <div className="tooltip-container">
-          <div>
-            name: {seat.name} price : {seat.price}$
-          </div>
           <div className="tooltip-item" data-id={seat.id}>
             <input
               type="text"
               name={`name${seat.id}`}
               value={seat.name}
-     
+              style={{ width: "100%" }}
               data-id={seat.id}
             />
             Name
@@ -134,6 +132,7 @@ class SeatPicker extends React.Component {
       </div>
     );
   };
+  renderEditAction = (seat) => {};
   renderRowsName = (index, rowLength) => {
     const { isRowAlphabet, isRowRevers } = this.props;
     const alphabet = "abcdefghijklmnopqrstuvwxyz".split(""); //length 26
@@ -148,24 +147,26 @@ class SeatPicker extends React.Component {
         : alphabet[index].toUpperCase();
     }
     if (!isRowAlphabet && isRowRevers) {
-      return (rowLength) - index >= 10 ? (rowLength) - index : `0${(rowLength) - index}`;
+      return rowLength - index >= 10
+        ? rowLength - index
+        : `0${rowLength - index}`;
     } else if (isRowAlphabet && index < 53 && isRowRevers) {
-      console.log((rowLength - index) >26 )
-      console.log(alphabet[(rowLength - index) - 27] )
       // console.log(alphabet[index - 26].toUpperCase())
       // `${alphabet[index - 26].toUpperCase()}${alphabet[
       //   index - 26
       //   ].toUpperCase()}`
 
-      return (rowLength - index) >26
-        ? `${alphabet[(rowLength - index) - 27].toUpperCase()}${alphabet[
-          (rowLength - index) - 27
+      return rowLength - index > 26
+        ? `${alphabet[rowLength - index - 27].toUpperCase()}${alphabet[
+            rowLength - index - 27
           ].toUpperCase()}`
-        : alphabet.reverse()[26 - (rowLength - index )].toUpperCase();
+        : alphabet.reverse()[26 - (rowLength - index)].toUpperCase();
     }
   };
 
-
+  editSeat = (seat) => {
+    this.props.openEditModal(seat);
+  };
 
   render() {
     const { rows, loading } = this.props;
@@ -199,26 +200,24 @@ class SeatPicker extends React.Component {
                               key={seatIndex}
                             >
                               {this.renderRowsName(index, rows.length)}
-
-                              {/* {index + 1 >= 10 ? index + 1 : `0${index + 1}`} */}
                             </div>
                             {seat == null ? (
                               <div
+                                onClick={() => this.props.openEditModal(seat)}
                                 className="seat tooltip separator"
                                 key={seatIndex}
                               >
                                 00
-                                {this.renderTooltip(seat)}
                               </div>
                             ) : (
                               <div
-                                className={`seat tooltip ${this.renderState(
+                                onClick={() => this.props.openEditModal(seat)}
+                                className={`seat ${this.renderState(
                                   seat.state,
                                   seat.id
                                 )}`}
                               >
                                 {seat.name}
-                                {this.renderTooltip(seat)}
                               </div>
                             )}
                           </>
@@ -226,7 +225,11 @@ class SeatPicker extends React.Component {
                       }
                       if (seat == null)
                         return (
-                          <div className="seat separator" key={seatIndex}>
+                          <div
+                            className="seat separator"
+                            key={seatIndex}
+                            onClick={() => this.props.openEditModal(seat)}
+                          >
                             00
                           </div>
                         );
@@ -240,9 +243,9 @@ class SeatPicker extends React.Component {
                           data-seat={JSON.stringify(seat)}
                           data-state={seat.state}
                           key={seat.id}
+                          onClick={() => this.props.openEditModal(seat)}
                         >
                           {seat.name}
-                          {this.renderTooltip(seat)}{" "}
                         </div>
                       );
                     })}

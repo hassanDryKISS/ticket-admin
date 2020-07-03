@@ -1,14 +1,40 @@
 self.onmessage = async (event) => {
-  const { row, col, price, state, isColOdd } = event.data;
+  const {
+    row,
+    col,
+    colEnd,
+    colStp,
+    price,
+    state,
+    numberColFormat,
+    colRtl,
+    numberRowFormat,
+  } = event.data;
   let newRows = [];
-  if (isColOdd) {
+  if (numberColFormat === "odd") {
     for (let i = 0; i < row; i++) {
       newRows[i] = [];
-      for (let j = 0; j < col; j++) {
+      for (let j = col; j < colEnd; j = j + colStp) {
         if (j % 2 !== 0) {
+          //check odd
           await newRows[i].push({
             id: `${i + 1}-${j + 1}`,
-            name: j + 1,
+            name: colRtl ? Math.abs(j - colEnd) + col : j,
+            state: state,
+            price: price,
+          });
+        }
+      }
+    }
+  } else if (numberColFormat === "even") {
+    for (let i = 0; i < row; i++) {
+      newRows[i] = [];
+      for (let j = col; j <= colEnd; j = j + colStp) {
+        if (j % 2 === 0) {
+          // check even
+          await newRows[i].push({
+            id: `${i + 1}-${j}`,
+            name: colRtl ? Math.abs(j - colEnd) + col : j,
             state: state,
             price: price,
           });
@@ -18,10 +44,11 @@ self.onmessage = async (event) => {
   } else {
     for (let i = 0; i < row; i++) {
       newRows[i] = [];
-      for (let j = 0; j < col; j++) {
+      for (let j = col; j <= colEnd; j = j + colStp) {
+        // default
         await newRows[i].push({
           id: `${i + 1}-${j + 1}`,
-          name: j + 1,
+          name: colRtl ? Math.abs(j - colEnd) + col : j,
           state: state,
           price: price,
         });

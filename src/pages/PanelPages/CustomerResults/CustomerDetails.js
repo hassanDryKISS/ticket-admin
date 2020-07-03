@@ -30,8 +30,7 @@ import {
   SearchOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import {Link} from 'react-router-dom'
-
+import { Link } from "react-router-dom";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -74,11 +73,11 @@ class CustomerResults extends React.Component {
         {
           id: 123132,
           status: "Completed - Paid in Full",
-          reserved: 'Fri. 13 Dec, 2013 at 5:37pm',
-          ticket_summery: 'summery',
-          total: 'AUD $182.00',
-          confId : '37171RZT2555104'
-        }
+          reserved: "Fri. 13 Dec, 2013 at 5:37pm",
+          ticket_summery: "summery",
+          total: "AUD $182.00",
+          confId: "37171RZT2555104",
+        },
       ],
     };
   }
@@ -104,33 +103,36 @@ class CustomerResults extends React.Component {
   getColumns() {
     return [
       {
-        title: 'ORDER ID',
-        dataIndex: 'id',
-        key: 'id',
-        render: (id)=> <Link to="/order/909">{id}</Link>
+        title: "ORDER ID",
+        dataIndex: "id",
+        key: "id",
+        render: (id) => <Link to="/order/909">{id}</Link>,
       },
-   {
-        title: 'STATUS',
-        dataIndex: 'status',
-        key: 'status',
-      }, {
-        title: 'RESERVED',
-        dataIndex: 'reserved',
-        key: 'reserved',
-      },{
-        title: 'TICKET SUMMARY',
-        dataIndex: 'ticket_summery',
-        key: 'ticket_summery',
-      },{
-        title: 'CONFIRMATION ID',
-        dataIndex: 'confId',
-        key: 'confId',
-      },{
-        title: 'TOTAL',
-        dataIndex: 'total',
-        key: 'total',
+      {
+        title: "STATUS",
+        dataIndex: "status",
+        key: "status",
       },
-  
+      {
+        title: "RESERVED",
+        dataIndex: "reserved",
+        key: "reserved",
+      },
+      {
+        title: "TICKET SUMMARY",
+        dataIndex: "ticket_summery",
+        key: "ticket_summery",
+      },
+      {
+        title: "CONFIRMATION ID",
+        dataIndex: "confId",
+        key: "confId",
+      },
+      {
+        title: "TOTAL",
+        dataIndex: "total",
+        key: "total",
+      },
     ];
   }
 
@@ -171,7 +173,11 @@ class CustomerResults extends React.Component {
                 </List.Item>
               )}
             />
-            <TextArea rows={4} style={{ margin: "15px 0" }} placeholder="Note" />
+            <TextArea
+              rows={4}
+              style={{ margin: "15px 0" }}
+              placeholder="Note"
+            />
             <Button type="primary">Create Note >></Button>
           </Col>
           <Col xs={24} sm={17}>
@@ -217,7 +223,6 @@ class CustomerResults extends React.Component {
             />
           </Col>
         </Row>
-       
 
         <Modal
           title="Edit"
